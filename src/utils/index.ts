@@ -45,10 +45,10 @@ export const adminNavOptions = [
 
 export const registrationFormControls = [
   {
-    id: "name",
+    id: "username",
     type: "text",
-    placeholder: "Enter your name",
-    label: "Name",
+    placeholder: "Enter your username",
+    label: "Username",
     componentType: "input",
   },
   {
@@ -65,23 +65,23 @@ export const registrationFormControls = [
     label: "Password",
     componentType: "input",
   },
-  {
-    id: "role",
-    type: "",
-    placeholder: "",
-    label: "Role",
-    componentType: "select",
-    options: [
-      {
-        id: "admin",
-        label: "Admin",
-      },
-      {
-        id: "customer",
-        label: "customer",
-      },
-    ],
-  },
+  // {
+  //   id: "role",
+  //   type: "",
+  //   placeholder: "",
+  //   label: "Role",
+  //   componentType: "select",
+  //   options: [
+  //     {
+  //       id: "admin",
+  //       label: "Admin",
+  //     },
+  //     {
+  //       id: "customer",
+  //       label: "customer",
+  //     },
+  //   ],
+  // },
 ];
 
 export const loginFormControls = [

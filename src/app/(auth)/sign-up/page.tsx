@@ -12,7 +12,7 @@ import { useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 const initialFormData = {
-  name: "",
+  username: "",
   email: "",
   password: "",
   role: "customer",
@@ -21,16 +21,25 @@ const initialFormData = {
 export default function Register() {
   const [formData, setFormData] = useState(initialFormData);
   const [isRegistered, setIsRegistered] = useState(false);
-  // const { pageLevelLoader, setPageLevelLoader , isAuthUser } = useContext(GlobalContext);
+
+  // const context = useContext(GlobalContext);
+
+  // // Check if context is null
+  // if (!context) {
+  //   // Handle the case when context is null
+  //   return <div>Loading...</div>; // or any other fallback UI
+  // }
+
+  const { pageLevelLoader, setPageLevelLoader , isAuthUser } = useContext(GlobalContext);
 
   const router = useRouter()
 
-  console.log(formData);
+  // console.log(formData);
 
   function isFormValid() {
     return formData &&
-      formData.name &&
-      formData.name.trim() !== "" &&
+      formData.username &&
+      formData.username.trim() !== "" &&
       formData.email &&
       formData.email.trim() !== "" &&
       formData.password &&
@@ -47,14 +56,14 @@ export default function Register() {
 
     if (data.success) {
       toast.success(data.message, {
-        position: toast.POSITION.TOP_RIGHT,
+        position: "top-right",
       });
       setIsRegistered(true);
       setPageLevelLoader(false);
       setFormData(initialFormData);
     } else {
       toast.error(data.message, {
-        position: toast.POSITION.TOP_RIGHT,
+        position: "top-right",
       });
       setPageLevelLoader(false);
       setFormData(initialFormData);
@@ -89,33 +98,35 @@ export default function Register() {
                 </button>
               ) : (
                 <div className="w-full mt-6 mr-0 mb-0 ml-0 relative space-y-8">
-                  {registrationFormControls.map((controlItem) =>
-                    controlItem.componentType === "input" ? (
+                  {registrationFormControls.map((controlItem, index) =>
+                    // controlItem.componentType === "input" ? (
                       <InputComponent
+                        key={index}
                         type={controlItem.type}
                         placeholder={controlItem.placeholder}
                         label={controlItem.label}
-                        onChange={(event) => {
+                        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                           setFormData({
                             ...formData,
                             [controlItem.id]: event.target.value,
                           });
                         }}
-                        value={formData[controlItem.id]}
+                        value={formData[controlItem.id as keyof typeof formData]}
                       />
-                    ) : controlItem.componentType === "select" ? (
-                      <SelectComponent
-                        options={controlItem.options}
-                        label={controlItem.label}
-                        onChange={(event) => {
-                          setFormData({
-                            ...formData,
-                            [controlItem.id]: event.target.value,
-                          });
-                        }}
-                        value={formData[controlItem.id]}
-                      />
-                    ) : null
+                    // ) 
+                    // : controlItem.componentType === "select" ? (
+                    //   <SelectComponent
+                    //     options={controlItem.options}
+                    //     label={controlItem.label}
+                    //     onChange={(event) => {
+                    //       setFormData({
+                    //         ...formData,
+                    //         [controlItem.id]: event.target.value,
+                    //       });
+                    //     }}
+                    //     value={formData[controlItem.id as keyof typeof formData]}
+                    //   />
+                    // ) : null
                   )}
                   <button
                     className=" disabled:opacity-50 inline-flex w-full items-center justify-center bg-black px-6 py-4 text-lg 

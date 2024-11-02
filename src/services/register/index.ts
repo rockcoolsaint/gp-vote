@@ -1,10 +1,14 @@
-import * as dotenv from "dotenv";
+// import * as dotenv from "dotenv";
 
-dotenv.config();
+// dotenv.config();
 
+const apiUrl = process.env.API_BASE_URL;
+
+console.log("API_BASE_URL:", apiUrl)
 export const registerNewUser = async (formData: any) => {
+  // console.log("API_BASE_URL_2:", apiUrl)
   try {
-    const response = await fetch(`${process.env.API_BASE_URL}/auth/register`, {
+    const response = await fetch(`http://localhost:8000/api/v1/auth/register`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
