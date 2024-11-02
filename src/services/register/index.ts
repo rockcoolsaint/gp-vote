@@ -4,7 +4,7 @@ dotenv.config();
 
 export const registerNewUser = async (formData: any) => {
   try {
-    const response = await fetch(`${process.env.API_BASE_URL}/register`, {
+    const response = await fetch(`${process.env.API_BASE_URL}/auth/register`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
