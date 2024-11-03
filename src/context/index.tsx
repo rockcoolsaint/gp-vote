@@ -84,7 +84,6 @@ const protectedAdminRoutes = [
 interface User {
   name?: string;
   email?: string;
-  role?: string;
 }
 
 interface GlobalStateProps {
@@ -98,8 +97,9 @@ export default function GlobalState({ children }: GlobalStateProps) {
     loading: false,
     id: "",
   });
-  const [isAuthUser, setIsAuthUser] = useState<boolean | null>(null);
-  const [user, setUser] = useState<User | null>(null);
+  const [isAuthUser, setIsAuthUser] = useState<boolean | null>(true);
+  // const [userId, setUserId] = useState<string | null>(null)
+  const [user, setUser] = useState<User | string | null>(null);
   const [currentUpdatedProduct, setCurrentUpdatedProduct] = useState(null);
   const [showCartModal, setShowCartModal] = useState(false);
   const [cartItems, setCartItems] = useState([]);
@@ -127,7 +127,7 @@ export default function GlobalState({ children }: GlobalStateProps) {
     if (Cookies.get("token") !== undefined) {
       setIsAuthUser(true);
       const userData = JSON.parse(localStorage.getItem("user") ?? "{}") || {};
-      const getCartItems = JSON.parse(localStorage.getItem("cartItems") ?? "{}") || [];
+      // const getCartItems = JSON.parse(localStorage.getItem("cartItems") ?? "{}") || [];
       setUser(userData);
       // setCartItems(getCartItems);
     } else {
@@ -153,7 +153,7 @@ export default function GlobalState({ children }: GlobalStateProps) {
       user !== null &&
       user &&
       Object.keys(user).length > 0 &&
-      user?.role !== "admin" &&
+      // user?.role !== "admin" &&
       protectedAdminRoutes.indexOf(pathName) > -1
     )
       router.push("/unauthorized-page");

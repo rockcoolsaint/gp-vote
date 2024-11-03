@@ -54,7 +54,7 @@ export default function Register() {
     setPageLevelLoader(true);
     const data = await registerNewUser(formData);
 
-    if (data.success) {
+    if (data.token) {
       toast.success(data.message, {
         position: "top-right",
       });

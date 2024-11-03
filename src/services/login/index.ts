@@ -1,6 +1,6 @@
 export const login = async (formData: any) => {
   try {
-    const response = await fetch(`${process.env.API_BASE_URL}/login`, {
+    const response = await fetch(`http://localhost:8000/api/v1/auth/login`, {
       method: "POST",
       headers: {
         "content-type": "application/json",

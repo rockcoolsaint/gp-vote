@@ -2,9 +2,9 @@
 
 // dotenv.config();
 
-const apiUrl = process.env.API_BASE_URL;
+// const apiUrl = process.env.API_BASE_URL;
 
-console.log("API_BASE_URL:", apiUrl)
+// console.log("API_BASE_URL:", apiUrl)
 export const registerNewUser = async (formData: any) => {
   // console.log("API_BASE_URL_2:", apiUrl)
   try {
