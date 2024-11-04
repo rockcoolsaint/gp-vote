@@ -89,7 +89,7 @@ const TeacherForm = ({
         />
         <InputField
           label="Last Name"
-          name="LastName"
+          name="lastName"
           defaultValue={data?.lastName}
           register={register}
           error={errors.lastName}

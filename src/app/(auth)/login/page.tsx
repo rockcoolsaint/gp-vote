@@ -60,12 +60,13 @@ export default function Login() {
         position: "top-right",
       });
       setIsAuthUser(true);
-      const loggedinUserId = jwtDecode<CustomJwtPayload>(res.token);
-      console.log("loggedin user id: ", loggedinUserId.uuid)
-      setUser(loggedinUserId);
+      const loggedinUser = jwtDecode<CustomJwtPayload>(res.token);
+      console.log("loggedin user id: ", loggedinUser.uuid)
+      setUser(loggedinUser.uuid);
       setFormData(initialFormdata);
-      Cookies.set("token", res?.token);
-      localStorage.setItem("token", JSON.stringify(res?.token));
+      // Cookies.set("token", res?.token);
+      localStorage.setItem("token", res?.token);
+      localStorage.setItem("loggedinUserId", JSON.stringify(loggedinUser.uuid));
       setComponentLevelLoader({ loading: false, id: "" });
     } else {
       toast.error("Login failed!", {

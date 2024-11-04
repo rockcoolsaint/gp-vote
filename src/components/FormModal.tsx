@@ -5,6 +5,9 @@ import React, { useState } from "react";
 // import StudentForm from "./forms/StudentForm";
 import dynamic from "next/dynamic";
 
+const TitleForm = dynamic(() => import("./forms/TitleForm"), {
+  loading: () => <h1>Loading</h1>
+})
 const TeacherForm = dynamic(() => import("./forms/TeacherForm"), {
   loading: () => <h1>Loading</h1>
 })
@@ -15,6 +18,7 @@ const StudentForm = dynamic(() => import("./forms/TeacherForm"), {
 const forms: {
   [key: string]: (type: "create" | "update", data?: any) => JSX.Element;
 } = {
+  title: (type, data) => <TitleForm type={type} data={data} />,
   teacher: (type, data) => <TeacherForm type={type} data={data} />,
   student: (type, data) => <StudentForm type={type} data={data} />,
 };
@@ -26,6 +30,7 @@ const FormModal = ({
   id,
 }: {
   table:
+    | "title"
     | "teacher"
     | "student"
     | "parent"

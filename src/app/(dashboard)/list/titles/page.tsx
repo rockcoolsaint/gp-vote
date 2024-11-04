@@ -1,11 +1,15 @@
+"use client";
+
 import TableSearch from "@/components/TableSearch";
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import Image from "next/image";
 import Pagination from "@/components/Pagination";
 import Table from "@/components/Table";
 import Link from "next/link";
 import { role, teachersData } from "@/lib/data";
 import FormModal from "@/components/FormModal";
+import { GlobalContext } from "@/context";
+import { getTitles } from "@/services/title";
 
 type Teacher = {
   id: number;
@@ -56,6 +60,13 @@ const columns = [
 ];
 
 const TeacherListPage = () => {
+  // const userId = localStorage.getItem("user");
+  const {user, isAuthUser} = useContext(GlobalContext);
+  const userId = localStorage.getItem("loggedinUserId");
+
+  const titlesData = getTitles(userId);
+  console.log(titlesData);
+
   const renderRow: React.FC<Teacher> = (item) => {
     return (
       <tr key={item.id} className="border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-schPurpleLight">
@@ -99,7 +110,7 @@ const TeacherListPage = () => {
     <div className="p-4 bg-white rounded-md m-4 mt-0 flex-1">
       {/* Top */}
       <div className="flex items-center justify-between">
-        <h1 className="text-lg font-semibold hidden md:block">All Teachers</h1>
+        <h1 className="text-lg font-semibold hidden md:block">All Titles</h1>
         <div className="flex flex-col sm:flex-row items-center gap-4 md:w-auto">
           <TableSearch />
           <div className="flex items-center gap-4 self-end">
@@ -110,7 +121,7 @@ const TeacherListPage = () => {
               <Image src="/sort.png" alt="" width={14} height={14} />
             </button>
             {role === "admin" && (
-              <FormModal table="teacher" type="create"/>
+              <FormModal table="title" type="create"/>
             )}
           </div>
         </div>
