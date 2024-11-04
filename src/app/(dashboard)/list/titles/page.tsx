@@ -1,7 +1,7 @@
 "use client";
 
 import TableSearch from "@/components/TableSearch";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Image from "next/image";
 import Pagination from "@/components/Pagination";
 import Table from "@/components/Table";
@@ -11,16 +11,15 @@ import FormModal from "@/components/FormModal";
 import { GlobalContext } from "@/context";
 import { getTitles } from "@/services/title";
 
-type Teacher = {
+type Title = {
   id: number;
-  teacherId: number;
-  name: string;
-  phone: string;
-  email?: string;
+  title: string;
+  // phone: string;
+  // email?: string;
   photo: string;
-  subjects: string[];
-  classes: string[];
-  address: string;
+  // subjects: string[];
+  // classes: string[];
+  // address: string;
 };
 
 const columns = [
@@ -29,8 +28,8 @@ const columns = [
     accessor: "info",
   },
   {
-    header: "Teacher ID",
-    accessor: "teacherId",
+    header: "Title ID",
+    accessor: "titleId",
     className: "hidden md:table-cell",
   },
   {
@@ -59,35 +58,59 @@ const columns = [
   },
 ];
 
-const TeacherListPage = () => {
+const TitleListPage = () => {
   // const userId = localStorage.getItem("user");
   const {user, isAuthUser} = useContext(GlobalContext);
   const userId = localStorage.getItem("loggedinUserId");
 
-  const titlesData = getTitles(userId);
-  console.log(titlesData);
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true); 
 
-  const renderRow: React.FC<Teacher> = (item) => {
+  const fetchTitles = async () => {
+    try {
+      const titles = await getTitles(userId); // Fetch titles from the API
+      setData(titles); // Update state with fetched titles
+    } catch (error) {
+      console.error('Error fetching titles:', error);
+      setData([]); // Set to empty array if there's an error
+    } finally {
+      setLoading(false); // Stop loading
+    }
+  };
+
+  // const data: any[] = titlesData();
+
+  useEffect(() => {
+    fetchTitles();
+  }, [userId]); // Fetch titles whenever userId changes
+
+  if (loading) {
+    return <div>Loading titles...</div>; // Show loading state
+  }
+
+  const staticPhoto = "https://images.pexels.com/photos/2888150/pexels-photo-2888150.jpeg?auto=compress&cs=tinysrgb&w=1200";
+
+  const renderRow: React.FC<Title> = (item) => {
     return (
-      <tr key={item.id} className="border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-schPurpleLight">
+      <tr key={JSON.stringify(item.id)} className="border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-schPurpleLight">
         <td className="flex items-center gap-4 p-4">
           <Image
-            src={item.photo}
+            src={staticPhoto}
             alt=""
             width={40}
             height={40}
             className="md:hidden xl:block w-10 h-10 rounded-full object-cover"
           />
           <div className="flex flex-col">
-            <h3 className="font-semibold">{item.name}</h3>
-            <span className="text-xs text-gray-500">{item.email}</span>
+            <h3 className="font-semibold">{item.title}</h3>
+            <span className="text-xs text-gray-500">{item.title}</span>
           </div>
         </td>
-        <td className="hidden md:table-cell">{item.teacherId}</td>
-        <td className="hidden md:table-cell">{item.subjects.join(",")}</td>
-        <td className="hidden md:table-cell">{item.classes.join(",")}</td>
-        <td className="hidden md:table-cell">{item.phone}</td>
-        <td className="hidden md:table-cell">{item.address}</td>
+        <td className="hidden md:table-cell">{item.title}</td>
+        <td className="hidden md:table-cell">{item.title}</td>
+        <td className="hidden md:table-cell">{item.title}</td>
+        <td className="hidden md:table-cell">{item.title}</td>
+        <td className="hidden md:table-cell">{item.title}</td>
         <td>
           <div className="flex items-center gap-2">
             <Link href={`/list/teachers/${item.id}`} className="">
@@ -127,11 +150,11 @@ const TeacherListPage = () => {
         </div>
       </div>
       {/* List */}
-      <Table columns={columns} renderRow={renderRow} data={teachersData} />
+      <Table columns={columns} renderRow={renderRow} data={data} />
       {/* Pagination */}
       <Pagination />
     </div>
   );
 };
 
-export default TeacherListPage;
+export default TitleListPage;
