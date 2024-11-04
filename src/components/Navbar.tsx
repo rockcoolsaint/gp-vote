@@ -1,7 +1,26 @@
+"use client";
+
+import { GlobalContext } from '@/context';
 import Image from 'next/image'
-import React from 'react'
+import { useRouter } from 'next/navigation';
+import React, { useContext } from 'react'
 
 const Navbar = () => {
+    const {
+        setIsAuthUser,
+        setUser
+    } = useContext(GlobalContext);
+
+    const router = useRouter();
+
+    function handleLogout() {
+        setIsAuthUser(false);
+        setUser(null);
+        // Cookies.remove("token");
+        localStorage.clear();
+        router.push("/login");
+    }
+
   return (
       <div className='flex items-center justify-between p-4'>
           {/* search bar */}
@@ -21,6 +40,9 @@ const Navbar = () => {
               <div className="flex flex-col">
                   <span className='text-sx leading-3 font-medium'>John Doe</span>
                   <span className='text-[10px] text-gray-500 text-right'>Admin</span>
+              </div>
+              <div className="bg-white rounded-full flex items-center justify-center cursor-pointer">
+                  <span onClick={handleLogout}>Logout</span>
               </div>
               <Image src="/avatar.png" alt='' width={36} height={36} className='rounded-full'/>
           </div>

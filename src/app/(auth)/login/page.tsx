@@ -64,7 +64,7 @@ export default function Login() {
       console.log("loggedin user id: ", loggedinUserId.uuid)
       setUser(loggedinUserId);
       setFormData(initialFormdata);
-      // Cookies.set("token", res?.token);
+      Cookies.set("token", res?.token);
       localStorage.setItem("token", JSON.stringify(res?.token));
       setComponentLevelLoader({ loading: false, id: "" });
     } else {
@@ -75,11 +75,11 @@ export default function Login() {
       setComponentLevelLoader({ loading: false, id: "" });
     }
   }
-  console.log('isAuthUser, user');
+
   console.log(isAuthUser, user);
-  console.log('isAuthUser, user');
+  
   useEffect(() => {
-    if (isAuthUser) router.push("/");
+    if (isAuthUser) router.push("/admin");
   }, [isAuthUser]);
 
   return (

@@ -97,7 +97,7 @@ export default function GlobalState({ children }: GlobalStateProps) {
     loading: false,
     id: "",
   });
-  const [isAuthUser, setIsAuthUser] = useState<boolean | null>(true);
+  const [isAuthUser, setIsAuthUser] = useState<boolean | null>(null);
   // const [userId, setUserId] = useState<string | null>(null)
   const [user, setUser] = useState<User | string | null>(null);
   const [currentUpdatedProduct, setCurrentUpdatedProduct] = useState(null);
@@ -124,7 +124,7 @@ export default function GlobalState({ children }: GlobalStateProps) {
   const pathName = usePathname();
 
   useEffect(() => {
-    if (Cookies.get("token") !== undefined) {
+    if (localStorage.getItem("token") !== undefined) {
       setIsAuthUser(true);
       const userData = JSON.parse(localStorage.getItem("user") ?? "{}") || {};
       // const getCartItems = JSON.parse(localStorage.getItem("cartItems") ?? "{}") || [];
