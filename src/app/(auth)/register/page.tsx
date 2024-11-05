@@ -61,6 +61,7 @@ export default function Register() {
       setIsRegistered(true);
       setPageLevelLoader(false);
       setFormData(initialFormData);
+      router.push("/login")
     } else {
       toast.error(data.message, {
         position: "top-right",
@@ -73,7 +74,7 @@ export default function Register() {
   }
 
   useEffect(() => {
-    if (isAuthUser) router.push("/");
+    if (isAuthUser) router.push("/admin");
   }, [isAuthUser]);
 
   return (
